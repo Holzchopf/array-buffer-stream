@@ -1,9 +1,12 @@
 export class ArrayBufferStream {
   /**
-   * @type {ArrayBuffer}
+   * Underlying ArrayBuffer
    */
   buffer: ArrayBuffer
-  offset = 0
+  /**
+   * Read/write position
+   */
+  cursor = 0
 
   /**
    * Creates an ArrayBufferStream from an existing ArrayBuffer.
@@ -16,7 +19,7 @@ export class ArrayBufferStream {
    * Returns whether the end of the stream is reached.
    */
   eof(): boolean {
-    return this.offset >= this.buffer.byteLength
+    return this.cursor >= this.buffer.byteLength
   }
 
   /**
@@ -24,32 +27,32 @@ export class ArrayBufferStream {
    * @param byteLength bytes to read
    */
   readBytes(byteLength: number): ArrayBuffer {
-    const bytes = this.buffer.slice(this.offset, this.offset + byteLength)
-    this.offset += byteLength
+    const bytes = this.buffer.slice(this.cursor, this.cursor + byteLength)
+    this.cursor += byteLength
     return bytes
   }
 
   readUint8() {
-    const view = new DataView(this.buffer, this.offset, 1)
-    this.offset += 1
+    const view = new DataView(this.buffer, this.cursor, 1)
+    this.cursor += 1
     return view.getUint8(0)
   }
 
   readUint16LE() {
-    const view = new DataView(this.buffer, this.offset, 2)
-    this.offset += 2
+    const view = new DataView(this.buffer, this.cursor, 2)
+    this.cursor += 2
     return view.getUint16(0, true)
   }
   
   readUint32LE() {
-    const view = new DataView(this.buffer, this.offset, 4)
-    this.offset += 4
+    const view = new DataView(this.buffer, this.cursor, 4)
+    this.cursor += 4
     return view.getUint32(0, true)
   }
 
   readUint64LE() {
-    const view = new DataView(this.buffer, this.offset, 8)
-    this.offset += 8
+    const view = new DataView(this.buffer, this.cursor, 8)
+    this.cursor += 8
     return view.getBigUint64(0, true)
   }
 
@@ -72,8 +75,8 @@ export class ArrayBufferStream {
    * @param byteLength bytes to read
    */
   readAsciiString(byteLength: number) {
-    const view = new DataView(this.buffer, this.offset, byteLength)
-    this.offset += byteLength
+    const view = new DataView(this.buffer, this.cursor, byteLength)
+    this.cursor += byteLength
     const decoder = new TextDecoder('ascii')
     return decoder.decode(view)
   }
@@ -83,8 +86,8 @@ export class ArrayBufferStream {
    * @param byteLength bytes to read
    */
   readUTF16LEString(byteLength: number) {
-    const view = new DataView(this.buffer, this.offset, byteLength)
-    this.offset += byteLength
+    const view = new DataView(this.buffer, this.cursor, byteLength)
+    this.cursor += byteLength
     const decoder = new TextDecoder('utf-16le')
     return decoder.decode(view)
   }
