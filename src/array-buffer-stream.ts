@@ -297,7 +297,7 @@ export class ArrayBufferStream {
    * Writes a signed 8 bit integer.
    * @param value The value to write.
    */
-  writeint8(value: number) {
+  writeInt8(value: number) {
     const view = new DataView(this.buffer, this.cursor, 1)
     this.cursor += 1
     view.setInt8(0, value)

@@ -1,6 +1,6 @@
 {
   "name": "@holzchopf/array-buffer-stream",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Make an ArrayBuffer readable/writable like a stream.",
   "main": "./lib/index.js",
   "module": "./lib/index.js",
