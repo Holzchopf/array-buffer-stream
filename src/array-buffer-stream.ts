@@ -1,3 +1,5 @@
+import { joinArrayBuffers } from "./join-array-buffers"
+
 export class ArrayBufferStream {
   /**
    * Underlying ArrayBuffer
@@ -20,6 +22,14 @@ export class ArrayBufferStream {
    */
   eof(): boolean {
     return this.cursor >= this.buffer.byteLength
+  }
+
+  /**
+   * Creates a new ArrayBuffer from this stream's buffer and the given one and sets it as this stream's buffer.
+   * @param buffer ArrayBuffer to append.
+   */
+  append(buffer: ArrayBuffer) {
+    this.buffer = joinArrayBuffers([this.buffer, buffer])
   }
 
   /**
