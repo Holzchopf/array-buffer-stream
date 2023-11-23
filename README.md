@@ -31,7 +31,7 @@ This file was auto-generated with `zdoccer.js` 2.0.3
       - [`writeUint32(value: number, littleEndian?: boolean | undefined)`](#writeuint32-value-number-littleendian-boolean-undefined)
       - [`writeBigUint64(value: bigint, littleEndian?: boolean | undefined)`](#writebiguint64-value-bigint-littleendian-boolean-undefined)
       - [`writeUleb128(value: number)`](#writeuleb128-value-number)
-      - [`writeint8(value: number)`](#writeint8-value-number)
+      - [`writeInt8(value: number)`](#writeint8-value-number)
       - [`writeInt16(value: number, littleEndian?: boolean | undefined)`](#writeint16-value-number-littleendian-boolean-undefined)
       - [`writeInt32(value: number, littleEndian?: boolean | undefined)`](#writeint32-value-number-littleendian-boolean-undefined)
       - [`writeBigInt64(value: bigint, littleEndian?: boolean | undefined)`](#writebigint64-value-bigint-littleendian-boolean-undefined)
@@ -307,7 +307,7 @@ Writes an unsigned LEB128 value.
 
 <div id="writeint8-value-number"></div><!-- alias: writeint8 -->
 
-### `writeint8(value: number)`
+### `writeInt8(value: number)`
 
 
 Writes a signed 8 bit integer.
