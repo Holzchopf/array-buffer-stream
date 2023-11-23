@@ -1,12 +1,15 @@
 import { joinArrayBuffers } from "./join-array-buffers"
 
+/**
+ * Main ArrayBufferStream class.
+ */
 export class ArrayBufferStream {
   /**
-   * Underlying ArrayBuffer
+   * Underlying ArrayBuffer.
    */
   buffer: ArrayBuffer
   /**
-   * Read/write position
+   * Read/write position.
    */
   cursor = 0
 
