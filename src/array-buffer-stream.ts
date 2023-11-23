@@ -182,6 +182,17 @@ export class ArrayBufferStream {
   }
 
   /**
+   * Reads a number of bytes as UTF8 string and returns it as string.
+   * @param byteLength Bytes to read.
+   */
+  readUtf8String(byteLength: number) {
+    const view = new DataView(this.buffer, this.cursor, byteLength)
+    this.cursor += byteLength
+    const decoder = new TextDecoder('utf-8')
+    return decoder.decode(view)
+  }
+
+  /**
    * Reads a number of bytes as UTF16 string and returns it as string.
    * @param byteLength Bytes to read.
    * @param littleEndian If true, a little-endian value should be read.
