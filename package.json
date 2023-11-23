@@ -1,9 +1,11 @@
 {
   "name": "array-buffer-stream",
-  "version": "0.1.0",
+  "version": "0.1.0-a",
   "description": "make an ArrayBuffer readable/writable like a stream",
-  "main": "index.js",
+  "main": "./out/array-buffer-stream.js",
+  "types": "./out/array-buffer-stream.d.ts",
   "scripts": {
+    "build": "rm -f ./out/** && npx tsc && npm pack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
