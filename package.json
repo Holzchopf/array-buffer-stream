@@ -1,7 +1,7 @@
 {
-  "name": "array-buffer-stream",
-  "version": "0.2.0-c",
-  "description": "make an ArrayBuffer readable/writable like a stream",
+  "name": "@holzchopf/array-buffer-stream",
+  "version": "1.0.0",
+  "description": "Make an ArrayBuffer readable/writable like a stream.",
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -14,9 +14,13 @@
     "arraybuffer",
     "stream"
   ],
-  "author": "Olivier Stuker",
+  "author": "Olivier Stuker <contact@holzchopf.ch> (https://www.holzchopf.ch/)",
   "license": "ISC",
   "devDependencies": {
     "typescript": "^5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Holzchopf/array-buffer-stream.git"
   }
 }
