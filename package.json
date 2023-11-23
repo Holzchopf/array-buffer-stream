@@ -1,0 +1,18 @@
+{
+  "name": "array-buffer-stream",
+  "version": "0.1.0",
+  "description": "make an ArrayBuffer readable/writable like a stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "arraybuffer",
+    "stream"
+  ],
+  "author": "Olivier Stuker",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
