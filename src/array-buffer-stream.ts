@@ -149,6 +149,26 @@ export class ArrayBufferStream {
     } while (true)
     return num
   }
+
+  /**
+   * Reads the next bytes as 32 bit float and returns it as number.
+   * @param littleEndian If true, a little-endian value should be read.
+   */
+  readFloat32(littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 4)
+    this.cursor += 4
+    return view.getFloat32(0, littleEndian)
+  }
+
+  /**
+   * Reads the next bytes as 64 bit float and returns it as number.
+   * @param littleEndian If true, a little-endian value should be read.
+   */
+  readFloat64(littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 8)
+    this.cursor += 8
+    return view.getFloat64(0, littleEndian)
+  }
   
   /**
    * Reads a number of bytes as ascii string and returns it as string.
