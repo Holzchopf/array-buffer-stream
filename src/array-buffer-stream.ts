@@ -171,7 +171,7 @@ export class ArrayBufferStream {
   }
   
   /**
-   * Reads a number of bytes as ascii string and returns it as string.
+   * Reads a number of bytes as ASCII string and returns it as string.
    * @param byteLength Bytes to read.
    */
   readAsciiString(byteLength: number) {
@@ -204,5 +204,205 @@ export class ArrayBufferStream {
     return decoder.decode(view)
   }
 
+  /**
+   * Writes multiple bytes.
+   * @param bytes Bytes to write.
+   */
+  writeBytes(bytes: ArrayBuffer) {
+    const byteLength = bytes.byteLength
+    const srcView = new DataView(bytes, 0, byteLength)
+    const dstView = new DataView(this.buffer, this.cursor, byteLength)
+    for (let i = 0; i < byteLength; i++) {
+      dstView.setInt8(i, srcView.getInt8(i))
+    }
+    this.cursor += byteLength
+  }
 
+  /**
+   * Writes an unsigned 8 bit integer.
+   * @param value The value to write.
+   */
+  writeUint8(value: number) {
+    const view = new DataView(this.buffer, this.cursor, 1)
+    this.cursor += 1
+    view.setUint8(0, value)
+  }
+
+  /**
+   * Writes an unsigned 16 bit integer.
+   * @param value The value to write.
+   * @param littleEndian If true, a little-endian value should be written.
+   */
+  writeUint16(value: number, littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 2)
+    this.cursor += 2
+    view.setUint16(0, value, littleEndian)
+  }
+
+  /**
+   * Writes an unsigned 32 bit integer.
+   * @param value The value to write.
+   * @param littleEndian If true, a little-endian value should be written.
+   */
+  writeUint32(value: number, littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 4)
+    this.cursor += 4
+    view.setUint32(0, value, littleEndian)
+  }
+
+  /**
+   * Writes an unsigned 64 bit big integer.
+   * @param value The value to write.
+   * @param littleEndian If true, a little-endian value should be written.
+   */
+  writeUint64(value: bigint, littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 8)
+    this.cursor += 8
+    view.setBigUint64(0, value, littleEndian)
+  }
+
+  /**
+   * Writes an unsigned LEB128 value.
+   * @param value The value to write.
+   */
+  writeUleb128(value: number) {
+    value |= 0
+    do {
+      // write next 7 bits
+      const byte = value & 0x7f
+      value >>= 7
+      // stop, if enough bits are written
+      if (value === 0) {
+        this.writeUint8(byte)
+        break
+      }
+      this.writeUint8(byte | 0x80)
+    } while (true)
+  }
+
+  /**
+   * Writes a signed 8 bit integer.
+   * @param value The value to write.
+   */
+  writeint8(value: number) {
+    const view = new DataView(this.buffer, this.cursor, 1)
+    this.cursor += 1
+    view.setInt8(0, value)
+  }
+
+  /**
+   * Writes a signed 16 bit integer.
+   * @param value The value to write.
+   * @param littleEndian If true, a little-endian value should be written.
+   */
+  writeInt16(value: number, littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 2)
+    this.cursor += 2
+    view.setInt16(0, value, littleEndian)
+  }
+
+  /**
+   * Writes a signed 32 bit integer.
+   * @param value The value to write.
+   * @param littleEndian If true, a little-endian value should be written.
+   */
+  writeInt32(value: number, littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 4)
+    this.cursor += 4
+    view.setInt32(0, value, littleEndian)
+  }
+
+  /**
+   * Writes a signed 64 bit big integer.
+   * @param value The value to write.
+   * @param littleEndian If true, a little-endian value should be written.
+   */
+  writeInt64(value: bigint, littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 8)
+    this.cursor += 8
+    view.setBigInt64(0, value, littleEndian)
+  }
+
+  /**
+   * Writes a signed LEB128 value.
+   * @param value The value to write.
+   */
+  writeLeb128(value: number) {
+    value |= 0
+    do {
+      // write next 7 bits
+      const byte = value & 0x7f
+      value >>= 7
+      // stop, if enough bits are written
+      if (value === 0 && !(byte & 0x40) || value === ~0 && (byte & 0x40)) {
+        this.writeUint8(byte)
+        break
+      }
+      this.writeUint8(byte | 0x80)
+    } while (true)
+  }
+
+  /**
+   * Writes a 32 bit float.
+   * @param value The value to write.
+   * @param littleEndian If true, a little-endian value should be written.
+   */
+  writeFloat32(value: number, littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 4)
+    this.cursor += 4
+    view.setFloat32(0, value, littleEndian)
+  }
+
+  /**
+   * Writes a 64 bit float.
+   * @param value The value to write.
+   * @param littleEndian If true, a little-endian value should be written.
+   */
+  writeFloat64(value: number, littleEndian?: boolean | undefined) {
+    const view = new DataView(this.buffer, this.cursor, 8)
+    this.cursor += 8
+    view.setFloat64(0, value, littleEndian)
+  }
+
+  /**
+   * Writes a string as ASCII string.
+   * @param string String to write.
+   */
+  writeAsciiString(string: string) {
+    const byteLength = string.length
+    const view = new DataView(this.buffer, this.cursor, byteLength)
+    for (let i = 0; i < byteLength; i++) {
+      view.setUint8(i, string.charCodeAt(i))
+    }
+    this.cursor += byteLength
+  }
+
+  /**
+   * Writes a string as UTF-8 string.
+   * @param string String to write.
+   */
+  writeUtf8String(string: string) {
+    const encoder = new TextEncoder()
+    const bytes = encoder.encode(string)
+    const byteLength = bytes.byteLength
+    const view = new DataView(this.buffer, this.cursor, byteLength)
+    for (let i = 0; i < byteLength; i++) {
+      view.setUint8(i, bytes[i])
+    }
+    this.cursor += byteLength
+  }
+
+  /**
+   * Writes a string as UTF-16 string.
+   * @param string String to write.
+   */
+  writeUtf16String(string: string, littleEndian?: boolean | undefined) {
+    const length = string.length
+    const byteLength = length * 2
+    const view = new DataView(this.buffer, this.cursor, byteLength)
+    for (let i = 0; i < length; i++) {
+      view.setUint16(i * 2, string.charCodeAt(i), littleEndian)
+    }
+    this.cursor += byteLength
+  }
 }
