@@ -65,7 +65,7 @@ export class ArrayBufferStream {
    * Reads the next bytes as unsigned 64 bit integer and returns it as bigint.
    * @param littleEndian If true, a little-endian value should be read.
    */
-  readUint64(littleEndian?: boolean | undefined) {
+  readBigUint64(littleEndian?: boolean | undefined) {
     const view = new DataView(this.buffer, this.cursor, 8)
     this.cursor += 8
     return view.getBigUint64(0, littleEndian)
@@ -121,7 +121,7 @@ export class ArrayBufferStream {
    * Reads the next bytes as signed 64 bit integer and returns it as bigint.
    * @param littleEndian If true, a little-endian value should be read.
    */
-  readInt64(littleEndian?: boolean | undefined) {
+  readBigInt64(littleEndian?: boolean | undefined) {
     const view = new DataView(this.buffer, this.cursor, 8)
     this.cursor += 8
     return view.getBigInt64(0, littleEndian)
@@ -255,7 +255,7 @@ export class ArrayBufferStream {
    * @param value The value to write.
    * @param littleEndian If true, a little-endian value should be written.
    */
-  writeUint64(value: bigint, littleEndian?: boolean | undefined) {
+  writeBigUint64(value: bigint, littleEndian?: boolean | undefined) {
     const view = new DataView(this.buffer, this.cursor, 8)
     this.cursor += 8
     view.setBigUint64(0, value, littleEndian)
@@ -317,7 +317,7 @@ export class ArrayBufferStream {
    * @param value The value to write.
    * @param littleEndian If true, a little-endian value should be written.
    */
-  writeInt64(value: bigint, littleEndian?: boolean | undefined) {
+  writeBigInt64(value: bigint, littleEndian?: boolean | undefined) {
     const view = new DataView(this.buffer, this.cursor, 8)
     this.cursor += 8
     view.setBigInt64(0, value, littleEndian)
